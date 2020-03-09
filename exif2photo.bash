@@ -43,8 +43,8 @@ do
 	    DRAW0=(-annotate +10+10 "${INFO0}")
 	    INFO1="${TS}"
 	    DRAW1=(-annotate +10+110 "${INFO1}")
-	    echo mogrify -pointsize 100 -fill yellow "${FONT}" -gravity northwest "${DRAW0[@]}" -gravity northwest  "${DRAW1[@]}"  ${JPG}
-	    mogrify -pointsize 100 -fill yellow "${FONT}" -gravity northwest "${DRAW0[@]}" -gravity northwest  "${DRAW1[@]}"  ${JPG}
+	    echo mogrify -pointsize 100 -fill yellow ${FONT} -gravity northwest "${DRAW0[@]}" -gravity northwest  "${DRAW1[@]}"  ${JPG}
+	    mogrify -pointsize 100 -fill yellow ${FONT} -gravity northwest "${DRAW0[@]}" -gravity northwest  "${DRAW1[@]}"  ${JPG}
 	fi
 	#
 	if [ $MODE -eq 1 ]; then
