@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Needs: exiv2, imagemagick
+#
 for FILE in ITM*JPG;
 do
     echo "FILE: ${FILE}"
@@ -30,23 +32,28 @@ do
 	convert "${FILE}" -auto-orient "${JPG}"
 	#
 	MODE=1
+	#
+	FONT=""
+	if [ -e "./DOTMATRI.TTF" ]; then
+	    FONT="-font ./DOTMATRI.TTF"
+	fi
+	#
 	if [ $MODE -eq 0 ]; then
 	    INFO0=" ${EXP_TIME} @ ${APERTURE} ISO ${ISO}"
 	    DRAW0=(-annotate +10+10 "${INFO0}")
 	    INFO1="${TS}"
 	    DRAW1=(-annotate +10+110 "${INFO1}")
-	    echo mogrify -pointsize 100 -fill yellow -gravity northwest "${DRAW0[@]}" -gravity northwest  "${DRAW1[@]}"  ${JPG}
-	    mogrify -pointsize 100 -fill yellow -font ./DOTMATRI.TTF -gravity northwest "${DRAW0[@]}" -gravity northwest  "${DRAW1[@]}"  ${JPG}
+	    echo mogrify -pointsize 100 -fill yellow "${FONT}" -gravity northwest "${DRAW0[@]}" -gravity northwest  "${DRAW1[@]}"  ${JPG}
+	    mogrify -pointsize 100 -fill yellow "${FONT}" -gravity northwest "${DRAW0[@]}" -gravity northwest  "${DRAW1[@]}"  ${JPG}
 	fi
 	#
 	if [ $MODE -eq 1 ]; then
 	    INFO0=" ${EXP_TIME} @ ${APERTURE} ISO ${ISO} ${TS}"
-	    DRAW0=(-annotate +10+10 "${INFO0}")
-	    echo mogrify -pointsize 100 -fill yellow -font ./DOTMATRI.TTF -gravity southeast "${DRAW0[@]}"  ${JPG}
+	    echo mogrify -pointsize 100 -fill orange "${FONT}" -gravity southeast "${DRAW0[@]}"  ${JPG}
 	    DRAW0=(-annotate +4+4 "${INFO0}")
-	    mogrify -pointsize 100 -fill black -font ./DOTMATRI.TTF -gravity southeast "${DRAW0[@]}"  ${JPG}
+	    mogrify -pointsize 100 -fill black  ${FONT} -gravity southeast "${DRAW0[@]}"  ${JPG}
 	    DRAW0=(-annotate +10+10 "${INFO0}")
-	    mogrify -pointsize 100 -fill orange -font ./DOTMATRI.TTF -gravity southeast "${DRAW0[@]}"  ${JPG}
+	    mogrify -pointsize 100 -fill orange ${FONT} -gravity southeast "${DRAW0[@]}"  ${JPG}
 	fi
     else
 	echo "${EXP_TIME} @ ${APERTURE} ISO ${ISO}, ${TS}"
